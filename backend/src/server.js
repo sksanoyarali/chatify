@@ -4,6 +4,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import authRouter from './routes/auth.routes.js'
 import messageRouter from './routes/message.route.js'
+import connectDb from './lib/db.js'
 dotenv.config()
 const app = express()
 const port = process.env.PORT || 8080
@@ -27,4 +28,5 @@ app.use('/api/auth', authRouter)
 app.use('/api/messages', messageRouter)
 app.listen(port, () => {
   console.log(`server is running in port ${port}`)
+  connectDb()
 })
