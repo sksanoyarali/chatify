@@ -8,7 +8,7 @@ const connectDb = async () => {
   } catch (error) {
     console.log('Error in db connection')
 
-    process.exit(1)
+    process.exit(1)//1 status code means fail.0 means connected
   }
 }
 
