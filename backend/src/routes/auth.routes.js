@@ -11,7 +11,7 @@ import { arcjetProtection } from '../middlewares/arcjet.middleware.js'
 
 const authRouter = express.Router()
 
-authRouter.use(arcjetProtection)
+// authRouter.use(arcjetProtection)
 
 authRouter.post('/signup', signup)
 
