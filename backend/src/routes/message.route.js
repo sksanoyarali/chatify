@@ -11,7 +11,7 @@ const messageRouter = express.Router()
 
 messageRouter.get('/contacts', protectRoute, getAllContacts)
 
-messageRouter.get('/chats', getChatPartners)
+messageRouter.get('/chats', protectRoute, getChatPartners)
 
 messageRouter.get('/:id', protectRoute, getMessagesByUserId)
 

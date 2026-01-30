@@ -74,6 +74,7 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body
+
   try {
     if (!email || !password) {
       return res.status(400).json({
@@ -122,7 +123,7 @@ export const logout = async (req, res) => {
   })
 }
 
-export const updateProfile = async () => {
+export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body
 
