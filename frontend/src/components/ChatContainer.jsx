@@ -1,17 +1,26 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useChatStore } from '../store/useChatStore'
 import { useAuthStore } from '../store/useAuthStore'
 import ChatHeader from './ChatHeader'
 import NoChatHistoryPlaceholder from './NoChatHistoryPlaceholder'
 import MessagesLoadingSkeleton from './MessagesLoadingSkeleton'
+import MessageInput from './MessageInput'
 
 const ChatContainer = () => {
   const { selectedUser, getMessagesByUserId, messages, isMessagesLoding } =
     useChatStore()
   const { authUser } = useAuthStore()
+  const messageEndRef = useRef(null)
+
   useEffect(() => {
     getMessagesByUserId(selectedUser._id)
   }, [selectedUser, getMessagesByUserId])
+
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behaviour: 'smooth' })
+    }
+  }, [messages])
   return (
     <>
       <ChatHeader />
@@ -34,15 +43,18 @@ const ChatContainer = () => {
                     />
                   )}
                   {msg.text && <p className="mt-2">{msg.text}</p>}
-                  <p className="text-xs mt-1 opacity-75 flex items-center gap-1">
-                    {new Date(msg.createdAt).toLocaleTimeString(undefined, {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </p>
+                  {/* <p className="text-xs mt-1 opacity-75 flex items-center gap-1">
+                    {msg.createdAt &&
+                      !isNaN(new Date(msg.createdAt)) &&
+                      new Date(msg.createdAt).toLocaleTimeString(undefined, {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                  </p> */}
                 </div>
               </div>
             ))}
+            <div ref={messageEndRef} />
           </div>
         ) : isMessagesLoding ? (
           <MessagesLoadingSkeleton />
@@ -50,7 +62,7 @@ const ChatContainer = () => {
           <NoChatHistoryPlaceholder name={selectedUser.fullName} />
         )}
       </div>
-      {/* <MessageInput /> */}
+      <MessageInput />
     </>
   )
 }
