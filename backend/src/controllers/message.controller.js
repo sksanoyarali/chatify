@@ -81,7 +81,7 @@ export const sendMessage = async (req, res) => {
       text,
       image: imageUrl,
     })
-
+    newMessage.save()
     res.status(201).json(newMessage)
     // todo:send message in real time with socket.io
   } catch (error) {
@@ -104,7 +104,7 @@ export const getChatPartners = async (req, res) => {
     const chatPartnerIds = [
       ...new Set(
         messages.map((msg) =>
-          msg.senderId.toString === loggedInUserId
+          msg.senderId.toString() === loggedInUserId.toString()
             ? msg.receiverId.toString()
             : msg.senderId.toString()
         )
