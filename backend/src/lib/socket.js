@@ -17,6 +17,9 @@ const io = new Server(server, {
 
 io.use(socketAuthMiddleware)
 
+export function getReceiverSocketId(userId) {
+  return userSocketMap[userId]
+}
 // this is for online status check userId:socketId
 const userSocketMap = {}
 
